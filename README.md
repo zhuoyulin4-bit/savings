@@ -1,73 +1,146 @@
-# React + TypeScript + Vite
+# 🎰 TimeNebula (时空星云) - 扭蛋机储钱罐
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+一个充满童趣的像素风加班时间记录 PWA 应用。每工作一小时，扭蛋机就会掉落一个彩色胶囊，像开盲盒一样记录你的时间。
 
-Currently, two official plugins are available:
+## ✨ 特色功能
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 🎮 主界面 - 复古扭蛋机
+- **像素画扭蛋机**：手工绘制的红白配色日式扭蛋机
+- **实时倒计时**：清晰显示距离下一枚胶囊的剩余时间
+- **工作动画**：运行时机器内的胶囊会轻微晃动
+- **结算动画**：旋钮转动 + 胶囊掉落的视觉反馈
 
-## React Compiler
+### 📦 胶囊盒 - 流水账日志
+- **简洁列表**：每条记录都是一个彩色胶囊
+- **项目分类**：Design / Code / Meeting / Debug / Plan / Relax
+- **时间追踪**：精确记录每小时的时间和金额
+- **本地存储**：基于 IndexedDB，数据完全本地化
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 🎯 核心逻辑
+- **时薪制度**：每小时固定 ¥350
+- **自动结算**：满 1 小时自动触发结算流程
+- **标签系统**：每个胶囊可标记项目类型
+- **持久化**：Dexie.js + IndexedDB 确保数据永不丢失
 
-## Expanding the ESLint configuration
+## 🚀 快速开始
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 开发模式
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+访问 `http://localhost:5173`
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 测试模式（10秒 = 1小时）
+修改 `src/store/useStore.ts` 第 24 行：
+```typescript
+const TIME_UNIT = import.meta.env.DEV && true ? DEV_HOUR_MS : HOUR_MS
+//                                    ↑ 改为 true
 ```
+
+### 生产构建
+```bash
+npm run build
+npm run preview
+```
+
+### 部署到 Vercel
+```bash
+npx vercel
+```
+
+## 📱 PWA 安装
+
+### iOS Safari
+1. 打开应用网址
+2. 点击底部分享按钮
+3. 选择"添加到主屏幕"
+4. 享受全屏体验
+
+### Android Chrome
+1. 打开应用网址
+2. 点击右上角菜单
+3. 选择"安装应用"
+4. 完成
+
+## 🎨 技术栈
+
+- **框架**: React 18 + TypeScript
+- **构建**: Vite
+- **状态**: Zustand
+- **路由**: React Router
+- **数据库**: Dexie.js (IndexedDB)
+- **样式**: Tailwind CSS v4
+- **动画**: Framer Motion + CSS Keyframes
+
+## 📂 项目结构
+
+```
+src/
+├── components/
+│   ├── PixelGachapon.tsx    # 扭蛋机主视图（Canvas绘制）
+│   └── UI.tsx                # 右侧控制面板
+├── pages/
+│   └── Vault.tsx             # 胶囊盒日志页
+├── store/
+│   └── useStore.ts           # 全局状态管理
+├── db/
+│   ├── db.ts                 # Dexie 数据库实例
+│   └── types.ts              # 数据类型定义
+├── App.tsx                   # 主应用
+└── main.tsx                  # 入口文件
+```
+
+## 🎯 使用说明
+
+1. **启动工作**：长按右侧绿色投币按钮（🪙）1秒
+2. **查看进度**：顶部倒计时显示剩余时间
+3. **等待结算**：满1小时后自动弹出胶囊
+4. **选择标签**：点击项目类型完成分类
+5. **查看日志**：点击"胶囊盒"查看所有记录
+
+## 💡 设计理念
+
+### 为什么是扭蛋机？
+传统的时间记录工具过于枯燥，我们希望让加班也能充满期待感。每一小时就像投入一枚硬币，扭出一个带着惊喜的胶囊——这种"开盲盒"的体验让时间追踪变得有趣。
+
+### 像素风美学
+16-bit 复古游戏风格唤起童年回忆，粗黑边框 + 立体阴影的 UI 设计让每一次点击都有真实的按钮反馈。
+
+### 本地优先
+所有数据存储在本地 IndexedDB，无需注册，无需联网，绝对隐私。
+
+## 📝 开发日志
+
+- ✅ 初始化项目架构
+- ✅ 实现扭蛋机像素画渲染
+- ✅ 集成倒计时与进度条
+- ✅ 完成结算流程与弹窗
+- ✅ 实现 IndexedDB 数据持久化
+- ✅ 开发胶囊盒日志页面
+- ✅ 优化布局（右侧控制面板）
+- ✅ PWA 配置与离线支持
+
+## 🔧 调试技巧
+
+### 清空数据库
+打开浏览器开发者工具 -> Application -> IndexedDB -> 右键 TimeNebulaDB -> Delete
+
+### 查看日志
+```javascript
+// 控制台输入
+useStore.getState()
+```
+
+## 📄 License
+
+MIT
+
+## 🙏 致谢
+
+感谢所有为这个项目提供灵感和反馈的朋友们。
+
+---
+
+**Enjoy your time coins! 🪙✨**
