@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect } from 'react'
 import { PixelGachapon } from './components/PixelGachapon'
 import { UI } from './components/UI'
 import { useStore } from './store/useStore'

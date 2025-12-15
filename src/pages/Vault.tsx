@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { db, HourChunk } from '../db/db'
+import { db, type HourChunk } from '../db/db'
 
 export function Vault() {
   const [chunks, setChunks] = useState<HourChunk[]>([])

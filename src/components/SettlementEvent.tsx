@@ -22,7 +22,7 @@ export function SettlementEvent() {
     }
   }, [status])
 
-  useFrame((state, delta) => {
+  useFrame((_state, delta) => {
     if (!visible || !ringRef.current) return
     
     // Expand ring

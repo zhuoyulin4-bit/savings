@@ -80,10 +80,10 @@ export const useStore = create<State>((set, get) => ({
     
     if (diff >= TIME_UNIT) {
       const hoursPassed = Math.floor(diff / TIME_UNIT)
-      set((state) => ({ 
+      set({ 
         status: 'settlement',
         unclaimedHours: hoursPassed
-      }))
+      })
     }
   },
 
